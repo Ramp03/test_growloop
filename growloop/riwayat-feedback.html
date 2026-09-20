@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Feedback - GrowLoop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/history.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div>
+                <div class="logo">Grow<span>Loop</span></div>
+                <nav class="nav-menu">
+                    <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i> Dashboard</a>
+                    <a href="beri-feedback.html" class="nav-item"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i> Beri Feedback</a>
+                    <a href="riwayat-feedback.html" class="nav-item"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Refleksi</a>
+
+                    <span class="menu-divider">LAINNYA</span>
+                    <a href="#" class="nav-item"><i class="fa-solid fa-award" aria-hidden="true"></i> Apresiasi</a>
+                    <a href="#" class="nav-item"><i class="fa-solid fa-gear" aria-hidden="true"></i> Pengaturan</a>
+                </nav>
+            </div>
+            <button type="button" class="sidebar-profile" aria-haspopup="true" aria-expanded="false">
+                <span class="profile-avatar">MS</span>
+                <span class="profile-info">
+                    <span class="profile-name">Mia Santoso</span>
+                    <span class="profile-role">UI Designer</span>
+                </span>
+                <i class="fa-solid fa-chevron-down profile-dropdown-icon" aria-hidden="true"></i>
+            </button>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content history-main-layout">
+            <div class="history-list-container">
+                <header class="history-clean-header">
+                    <div>
+                        <h1>Riwayat Feedback</h1>
+                        <p class="sub-count" id="subCount"></p>
+                    </div>
+                    <div class="header-filters">
+                        <label class="sr-only" for="filterPeriode">Filter periode</label>
+                        <select id="filterPeriode" class="history-select">
+                            <option>Semua periode</option>
+                        </select>
+                        <label class="sr-only" for="filterUrutan">Urutkan</label>
+                        <select id="filterUrutan" class="history-select">
+                            <option>Urutkan: Terbaru</option>
+                        </select>
+                    </div>
+                </header>
+
+                <div class="history-grid-scroll-viewport">
+                    <div class="history-grid-flow" id="historyGridFlow">
+                        <!-- Diisi otomatis oleh js/history.js dari js/data.js -->
+                    </div>
+                </div>
+            </div>
+
+            <aside class="history-side-detail is-hidden" id="historySideDetail" aria-label="Detail feedback">
+
+                <button class="btn-close-panel icon-btn icon-btn-sm" id="btnClosePanel" aria-label="Tutup detail panel">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+
+                <div class="side-header-meta">
+                    <div class="side-user-profile">
+                        <div class="side-avatar-box icon-chip" id="pnlAvatar">AN</div>
+                        <div class="side-name-title">
+                            <h4 id="pnlName">Anonim</h4>
+                            <div class="side-meta-labels">
+                                <span id="pnlTarget" class="target-indicator">Individu</span>
+                                <span class="meta-separator">•</span>
+                                <span id="pnlDate">28 Mei 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="side-score-badge">
+                        <span id="pnlScore">4.4</span> <i class="fa-solid fa-star" aria-hidden="true"></i>
+                    </div>
+                </div>
+
+                <div class="side-scroll-body">
+                    <div class="side-competency-section">
+                        <h5>Skor Kompetensi</h5>
+                        <div class="side-bar-row">
+                            <div class="side-bar-info"><span>Komunikasi</span></div>
+                            <div class="side-progress-track"><div class="side-bar-fill fill-orange" id="compBar1"></div></div>
+                        </div>
+                        <div class="side-bar-row">
+                            <div class="side-bar-info"><span>Kerja Sama Tim</span></div>
+                            <div class="side-progress-track"><div class="side-bar-fill fill-green" id="compBar2"></div></div>
+                        </div>
+                        <div class="side-bar-row">
+                            <div class="side-bar-info"><span>Tanggung Jawab</span></div>
+                            <div class="side-progress-track"><div class="side-bar-fill fill-blue" id="compBar3"></div></div>
+                        </div>
+                        <div class="side-bar-row">
+                            <div class="side-bar-info"><span>Inisiatif</span></div>
+                            <div class="side-progress-track"><div class="side-bar-fill fill-yellow" id="compBar4"></div></div>
+                        </div>
+                        <div class="side-bar-row">
+                            <div class="side-bar-info"><span>Kualitas Kerja</span></div>
+                            <div class="side-progress-track"><div class="side-bar-fill fill-purple" id="compBar5"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="block-detail-info">
+                        <h5>Yang Sudah Baik</h5>
+                        <div class="box-callout callout-green">
+                            <p id="pnlGoodText">Memuat informasi feedback...</p>
+                        </div>
+                    </div>
+
+                    <div class="block-detail-info">
+                        <h5>Yang Perlu Ditingkatkan</h5>
+                        <div class="box-callout callout-orange">
+                            <p id="pnlImproveText">Memuat informasi feedback...</p>
+                        </div>
+                    </div>
+
+                    <div class="block-detail-info">
+                        <h5>Saran Pengembangan</h5>
+                        <div class="box-callout callout-purple">
+                            <p id="pnlDevelopText">Memuat informasi feedback...</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/history.js"></script>
+</body>
+</html>

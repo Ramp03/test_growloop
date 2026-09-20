@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beri Feedback - GrowLoop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/feedback-form.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div>
+                <div class="logo">Grow<span>Loop</span></div>
+                <nav class="nav-menu">
+                    <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i> Dashboard</a>
+                    <a href="beri-feedback.html" class="nav-item"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i> Beri Feedback</a>
+                    <a href="riwayat-feedback.html" class="nav-item"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Refleksi</a>
+
+                    <span class="menu-divider">LAINNYA</span>
+
+                    <a href="#" class="nav-item"><i class="fa-solid fa-award" aria-hidden="true"></i> Apresiasi</a>
+                    <a href="#" class="nav-item"><i class="fa-solid fa-gear" aria-hidden="true"></i> Pengaturan</a>
+                </nav>
+            </div>
+
+            <button type="button" class="sidebar-profile" aria-haspopup="true" aria-expanded="false">
+                <span class="profile-avatar">MS</span>
+                <span class="profile-info">
+                    <span class="profile-name">Mia Santoso</span>
+                    <span class="profile-role">UI Designer</span>
+                </span>
+                <i class="fa-solid fa-chevron-down profile-dropdown-icon" aria-hidden="true"></i>
+            </button>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            <header class="content-header animate-fade-up">
+                <h1>Beri <span>Feedback</span></h1>
+                <p>Berikan masukan yang membangun untuk rekan kerja, tim/divisi, atau manajer</p>
+            </header>
+
+            <div class="info-banner animate-fade-up" style="animation-delay: 0.1s;">
+                <div class="banner-icon icon-chip icon-forest">
+                    <i class="fa-solid fa-shield" aria-hidden="true"></i>
+                </div>
+                <div class="banner-text">
+                    <h3>Feedback bersifat anonim</h3>
+                    <p>Identitas kamu tidak akan ditampilkan kepada penerima feedback. Berikan masukan dengan jujur dan profesional.</p>
+                </div>
+                <div class="banner-graphic" aria-hidden="true">
+                    <svg width="80" height="50" viewBox="0 0 80 50" fill="none">
+                        <rect x="10" y="10" width="55" height="35" rx="4" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+                        <circle cx="22" cy="22" r="5" fill="#E2E8F0"/>
+                        <rect x="32" y="18" width="24" height="3" rx="1.5" fill="#E2E8F0"/>
+                        <rect x="32" y="24" width="16" height="3" rx="1.5" fill="#E2E8F0"/>
+                        <circle cx="65" cy="35" r="10" fill="#1A5335"/>
+                        <path d="M62 35L64 37L68 33" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+
+            <form id="feedbackForm" class="form-grid" novalidate>
+
+                <div class="form-column animate-fade-up" style="animation-delay: 0.15s;">
+                    <section class="form-panel">
+                        <h2 class="panel-title">1. Pilih Target Feedback</h2>
+
+                        <fieldset class="target-fieldset" style="margin-top: 1.5rem;">
+                            <legend class="form-legend">Jenis Feedback</legend>
+                            <div class="target-options">
+                                <label class="target-card">
+                                    <input type="radio" name="target" value="individu" checked>
+                                    <span class="target-card-face">
+                                        <span class="target-icon icon-chip-square"><i class="fa-solid fa-user" aria-hidden="true"></i></span>
+                                        <span class="target-info">
+                                            <h4>Individu</h4>
+                                            <p>Karyawan</p>
+                                        </span>
+                                    </span>
+                                </label>
+                                <label class="target-card">
+                                    <input type="radio" name="target" value="team">
+                                    <span class="target-card-face">
+                                        <span class="target-icon icon-chip-square"><i class="fa-solid fa-users" aria-hidden="true"></i></span>
+                                        <span class="target-info">
+                                            <h4>Tim / Divisi</h4>
+                                            <p>Seluruh anggota</p>
+                                        </span>
+                                    </span>
+                                </label>
+                                <label class="target-card">
+                                    <input type="radio" name="target" value="manager">
+                                    <span class="target-card-face">
+                                        <span class="target-icon icon-chip-square"><i class="fa-solid fa-user-tie" aria-hidden="true"></i></span>
+                                        <span class="target-info">
+                                            <h4>Manager</h4>
+                                            <p>Atasan langsung</p>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <div class="form-group" style="margin-top: 1.5rem;">
+                            <label class="form-label" for="pilihKaryawan" id="dropdownLabel">Pilih Karyawan</label>
+                            <select id="pilihKaryawan" name="penerima" class="form-select-lg">
+                                <option value="">Pilih…</option>
+                            </select>
+                            <p class="field-error-msg is-hidden" id="pilihKaryawanError">
+                                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                                <span>Wajib dipilih sebelum mengirim feedback.</span>
+                            </p>
+                        </div>
+
+                        <div class="status-alert">
+                            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                            <span>Feedback akan dikirim secara anonim kepada penerima.</span>
+                        </div>
+                    </section>
+
+                    <section class="form-panel">
+                        <h2 class="panel-title">2. Penilaian Kompetensi (1–5)</h2>
+
+                        <div class="competency-table">
+                            <div class="table-header">
+                                <div class="header-aspect">Aspek</div>
+                                <div class="header-score">1</div>
+                                <div class="header-score">2</div>
+                                <div class="header-score">3</div>
+                                <div class="header-score">4</div>
+                                <div class="header-score">5</div>
+                            </div>
+
+                            <div class="table-row">
+                                <div class="aspect-desc">
+                                    <strong id="label-komunikasi">Komunikasi</strong>
+                                    <p>Kemampuan menyampaikan ide dan informasi dengan jelas</p>
+                                </div>
+                                <div class="score-opt"><label><span class="sr-only">Komunikasi: 1</span><input type="radio" name="komunikasi" value="1" aria-labelledby="label-komunikasi"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Komunikasi: 2</span><input type="radio" name="komunikasi" value="2" aria-labelledby="label-komunikasi"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Komunikasi: 3</span><input type="radio" name="komunikasi" value="3" aria-labelledby="label-komunikasi"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Komunikasi: 4</span><input type="radio" name="komunikasi" value="4" aria-labelledby="label-komunikasi"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Komunikasi: 5</span><input type="radio" name="komunikasi" value="5" aria-labelledby="label-komunikasi"></label></div>
+                            </div>
+
+                            <div class="table-row">
+                                <div class="aspect-desc">
+                                    <strong id="label-kerjasama">Kerja Sama Tim</strong>
+                                    <p>Kemampuan bekerja sama dan mendukung anggota tim</p>
+                                </div>
+                                <div class="score-opt"><label><span class="sr-only">Kerja Sama Tim: 1</span><input type="radio" name="kerjasama" value="1" aria-labelledby="label-kerjasama"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Kerja Sama Tim: 2</span><input type="radio" name="kerjasama" value="2" aria-labelledby="label-kerjasama"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Kerja Sama Tim: 3</span><input type="radio" name="kerjasama" value="3" aria-labelledby="label-kerjasama"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Kerja Sama Tim: 4</span><input type="radio" name="kerjasama" value="4" aria-labelledby="label-kerjasama"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Kerja Sama Tim: 5</span><input type="radio" name="kerjasama" value="5" aria-labelledby="label-kerjasama"></label></div>
+                            </div>
+
+                            <div class="table-row">
+                                <div class="aspect-desc">
+                                    <strong id="label-tanggungjawab">Tanggung Jawab</strong>
+                                    <p>Menjalankan tugas dengan disiplin dan dapat diandalkan</p>
+                                </div>
+                                <div class="score-opt"><label><span class="sr-only">Tanggung Jawab: 1</span><input type="radio" name="tanggungjawab" value="1" aria-labelledby="label-tanggungjawab"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Tanggung Jawab: 2</span><input type="radio" name="tanggungjawab" value="2" aria-labelledby="label-tanggungjawab"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Tanggung Jawab: 3</span><input type="radio" name="tanggungjawab" value="3" aria-labelledby="label-tanggungjawab"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Tanggung Jawab: 4</span><input type="radio" name="tanggungjawab" value="4" aria-labelledby="label-tanggungjawab"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Tanggung Jawab: 5</span><input type="radio" name="tanggungjawab" value="5" aria-labelledby="label-tanggungjawab"></label></div>
+                            </div>
+
+                            <div class="table-row">
+                                <div class="aspect-desc">
+                                    <strong id="label-inisiatif">Inisiatif</strong>
+                                    <p>Berinisiatif dan proaktif dalam menyelesaikan pekerjaan</p>
+                                </div>
+                                <div class="score-opt"><label><span class="sr-only">Inisiatif: 1</span><input type="radio" name="inisiatif" value="1" aria-labelledby="label-inisiatif"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Inisiatif: 2</span><input type="radio" name="inisiatif" value="2" aria-labelledby="label-inisiatif"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Inisiatif: 3</span><input type="radio" name="inisiatif" value="3" aria-labelledby="label-inisiatif"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Inisiatif: 4</span><input type="radio" name="inisiatif" value="4" aria-labelledby="label-inisiatif"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Inisiatif: 5</span><input type="radio" name="inisiatif" value="5" aria-labelledby="label-inisiatif"></label></div>
+                            </div>
+
+                            <div class="table-row">
+                                <div class="aspect-desc">
+                                    <strong id="label-kualitas">Kualitas Kerja</strong>
+                                    <p>Hasil kerja rapi, akurat, dan berkualitas</p>
+                                </div>
+                                <div class="score-opt"><label><span class="sr-only">Kualitas Kerja: 1</span><input type="radio" name="kualitas" value="1" aria-labelledby="label-kualitas"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Kualitas Kerja: 2</span><input type="radio" name="kualitas" value="2" aria-labelledby="label-kualitas"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Kualitas Kerja: 3</span><input type="radio" name="kualitas" value="3" aria-labelledby="label-kualitas"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Kualitas Kerja: 4</span><input type="radio" name="kualitas" value="4" aria-labelledby="label-kualitas"></label></div>
+                                <div class="score-opt"><label><span class="sr-only">Kualitas Kerja: 5</span><input type="radio" name="kualitas" value="5" aria-labelledby="label-kualitas"></label></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="form-column animate-fade-up" style="animation-delay: 0.25s;">
+                    <section class="form-panel text-areas-panel">
+                        <h2 class="panel-title">3. Feedback Kualitatif</h2>
+
+                        <div class="form-group text-counter-wrapper">
+                            <label class="form-label" for="positifText">Apa yang sudah dilakukan dengan baik?</label>
+                            <textarea id="positifText" name="positif" class="form-textarea" maxlength="500" placeholder="Tuliskan hal positif yang kamu amati secara spesifik"></textarea>
+                            <div class="char-counter"><span id="countPositif">0</span>/500</div>
+                        </div>
+
+                        <div class="form-group text-counter-wrapper">
+                            <label class="form-label" for="peningkatanText">Apa yang bisa ditingkatkan?</label>
+                            <textarea id="peningkatanText" name="peningkatan" class="form-textarea" maxlength="500" placeholder="Berikan masukan yang membangun untuk area pengembangan"></textarea>
+                            <div class="char-counter"><span id="countPeningkatan">0</span>/500</div>
+                        </div>
+
+                        <div class="form-group text-counter-wrapper">
+                            <label class="form-label" for="saranText">Saran pengembangan</label>
+                            <textarea id="saranText" name="saran" class="form-textarea" maxlength="500" placeholder="Berikan saran atau ide untuk membantu pengembangan dirinya"></textarea>
+                            <div class="char-counter"><span id="countSaran">0</span>/500</div>
+                        </div>
+
+                        <div class="tips-box">
+                            <div class="tips-title">
+                                <i class="fa-regular fa-lightbulb" aria-hidden="true"></i> Tips memberikan feedback
+                            </div>
+                            <ul>
+                                <li>Fokus pada perilaku atau hasil kerja, bukan kepribadian.</li>
+                                <li>Berikan contoh spesifik agar lebih mudah dipahami.</li>
+                                <li>Sampaikan dengan bahasa yang sopan dan membangun.</li>
+                            </ul>
+                        </div>
+
+                        <div class="action-footer">
+                            <button type="button" class="btn-secondary">Batal</button>
+                            <button type="submit" class="btn-primary">
+                                Kirim Feedback (Anonim) <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </section>
+                </div>
+
+            </form>
+        </main>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/feedback-form.js"></script>
+</body>
+</html>

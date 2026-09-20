@@ -1,0 +1,491 @@
+/* =========================================================
+   GrowLoop — Dashboard
+   ========================================================= */
+
+.noti-bell {
+    position: relative;
+}
+
+.noti-dot {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 6px;
+    height: 6px;
+    background: var(--red-500);
+    border-radius: 50%;
+}
+
+.header-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* --- KPI cards --- */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.kpi-card {
+    background: var(--card-white);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.kpi-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+}
+
+.kpi-data {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.kpi-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.kpi-value {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 0.25rem 0;
+}
+
+.kpi-value .score-max {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.kpi-trend {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--green-800);
+}
+
+.kpi-trend small {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.kpi-link {
+    margin-top: 0.15rem;
+}
+
+/* --- Grid tengah: kekuatan / area ditingkatkan / tren --- */
+.dashboard-middle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.progress-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.progress-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+}
+
+.progress-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 0.15rem;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-label-text {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.aspect-score {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    flex-shrink: 0;
+}
+
+.aspect-score.tone-orange {
+    color: var(--orange-600);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: var(--slate-100);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background-color: var(--accent-dark-green);
+    border-radius: 10px;
+}
+
+.bar-fill.bg-orange {
+    background-color: var(--orange-500);
+}
+
+/* --- Grafik tren mini --- */
+.chart-form-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-container-dummy {
+    position: relative;
+    padding: 0.5rem 0 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.chart-container-dummy svg {
+    width: 100%;
+    height: 190px;
+    overflow: visible;
+}
+
+.chart-axis-label {
+    font-size: 11px;
+    font-weight: 600;
+    fill: var(--text-subtle);
+}
+
+.chart-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px 0 24px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* --- Titik data interaktif: hover untuk lihat skor --- */
+.chart-point {
+    cursor: pointer;
+}
+
+.chart-point-hit {
+    fill: transparent;
+    pointer-events: all;
+}
+
+.chart-point-dot {
+    fill: #FFFFFF;
+    stroke: var(--accent-dark-green);
+    stroke-width: 2.5px;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.15s ease;
+}
+
+.chart-point:hover .chart-point-dot,
+.chart-point:focus-visible .chart-point-dot {
+    transform: scale(1.5);
+    fill: var(--accent-dark-green);
+}
+
+.chart-tooltip {
+    opacity: 0;
+    transform: translateY(4px);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    pointer-events: none;
+}
+
+.chart-point:hover .chart-tooltip,
+.chart-point:focus-visible .chart-tooltip {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.chart-tooltip rect,
+.chart-tooltip polygon {
+    fill: var(--accent-dark-green);
+}
+
+.chart-tooltip text {
+    fill: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .chart-point-dot,
+    .chart-tooltip {
+        transition: none;
+    }
+}
+
+/* --- Header panel dengan ikon + judul + subjudul (dipakai Feedback Terbaru) --- */
+.panel-heading-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.chart-panel-header {
+    flex-wrap: wrap;
+    row-gap: 0.75rem;
+}
+
+.panel-icon-circle {
+    width: 38px;
+    height: 38px;
+    font-size: 0.95rem;
+}
+
+.panel-subtitle {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.1rem;
+}
+
+/* --- Feedback terbaru: daftar kartu --- */
+.fb-card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.fb-card-item {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.fb-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.fb-card-user {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+}
+
+.fb-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--accent-dark-green);
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.fb-user-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.fb-user-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.fb-user-role {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.fb-card-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.fb-card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.fb-card-text {
+    font-size: 0.8rem;
+    color: var(--slate-700);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.score-pill {
+    flex-shrink: 0;
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.score-pill-good {
+    background-color: var(--green-50);
+    color: var(--green-800);
+}
+
+.score-pill-neutral {
+    background-color: #EEF2FF;
+    color: #4F46E5;
+}
+
+/* --- Action plan mendekati deadline --- */
+.deadline-item {
+    margin-top: 1.25rem;
+    background: var(--orange-50);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--orange-100);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.deadline-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.deadline-icon {
+    width: 36px;
+    height: 36px;
+    background-color: var(--rose-100);
+    color: var(--rose-600);
+    font-size: 0.95rem;
+}
+
+.deadline-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.deadline-info strong {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.deadline-info span {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.deadline-progress-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid var(--slate-100);
+    border-top-color: var(--green-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--green-800);
+    flex-shrink: 0;
+}
+
+.tips-box.tips-box-spaced {
+    margin-top: 1.5rem;
+}
+
+/* --- Grid bawah: Feedback Terbaru + Action Plan --- */
+.dashboard-bottom-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    align-items: start;
+}
+
+/* =========================================================
+   Responsif
+   ========================================================= */
+@media (max-width: 1200px) {
+    .dashboard-middle-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 1100px) {
+    .dashboard-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1024px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-middle-grid {
+        grid-template-columns: 1fr;
+    }
+    .header-title-wrapper {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 640px) {
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+}

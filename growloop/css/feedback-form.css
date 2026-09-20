@@ -1,0 +1,259 @@
+/* =========================================================
+   GrowLoop — Beri Feedback
+   ========================================================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    align-items: start;
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group + .form-group {
+    margin-top: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+}
+
+.form-legend {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    padding: 0;
+    border: none;
+}
+
+/* --- 1. Seleksi target feedback --- */
+.target-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.target-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    list-style: none;
+}
+
+.target-card {
+    position: relative;
+    display: block;
+}
+
+.target-card input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+.target-card-face {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.target-icon {
+    width: 34px;
+    height: 34px;
+    background-color: #F8FAFC;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.target-info h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.target-info p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.target-card input:checked + .target-card-face {
+    border-color: var(--accent-dark-green);
+}
+
+.target-card input:checked + .target-card-face .target-icon {
+    background-color: var(--accent-light-green);
+    color: var(--accent-dark-green);
+    border-color: transparent;
+}
+
+.target-card input:focus-visible + .target-card-face {
+    outline: 2px solid var(--accent-dark-green);
+    outline-offset: 2px;
+}
+
+.status-alert {
+    background-color: var(--green-50);
+    color: var(--green-800);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    margin-top: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* --- 2. Tabel penilaian kompetensi --- */
+.competency-table {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5rem;
+}
+
+.table-header,
+.table-row {
+    display: grid;
+    grid-template-columns: 2fr repeat(5, 40px);
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.table-header {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.header-score {
+    text-align: center;
+}
+
+.table-row {
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--border-faint);
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.aspect-desc strong {
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: block;
+}
+
+.aspect-desc p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+}
+
+.score-opt {
+    display: flex;
+    justify-content: center;
+}
+
+.score-opt label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.score-opt input[type="radio"] {
+    accent-color: var(--accent-dark-green);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* --- 3. Feedback kualitatif --- */
+.text-areas-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.text-counter-wrapper {
+    position: relative;
+}
+
+.form-textarea {
+    width: 100%;
+    background-color: var(--card-white);
+    color: var(--text-dark);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    font-size: 0.9rem;
+    resize: none;
+    height: 110px;
+    line-height: 1.4;
+    transition: border-color 0.15s ease;
+}
+
+.form-textarea:hover {
+    border-color: var(--text-muted);
+}
+
+.form-textarea:focus-visible {
+    border-color: var(--accent-dark-green);
+}
+
+.form-textarea::placeholder {
+    color: #71717A;
+}
+
+.char-counter {
+    text-align: right;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+/* =========================================================
+   Responsif
+   ========================================================= */
+@media (max-width: 1100px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .info-banner {
+        padding-right: 1.5rem;
+    }
+    .banner-graphic {
+        display: none;
+    }
+    .target-options {
+        grid-template-columns: 1fr;
+    }
+}

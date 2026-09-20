@@ -1,0 +1,717 @@
+/* =========================================================
+   GrowLoop — Base
+   Reset, token warna, layout aplikasi (sidebar + main),
+   dan komponen yang dipakai di lebih dari satu halaman.
+   ========================================================= */
+
+/* --- Reset --- */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
+}
+
+img,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* --- Token desain --- */
+:root {
+    /* Warna dasar */
+    --bg-sidebar: #0A2422;
+    --bg-sidebar-soft: #0F332F;
+    --bg-main: #F4F6F5;
+    --text-dark: #1A1D1C;
+    --text-muted: #64748B;
+    --text-subtle: #94A3B8;
+    /* Warna brand (aksen utama: tombol, link, progress bar, nav aktif) */
+    --accent-dark-green: #0D9488;
+    --accent-dark-green-hover: #0F766E;
+    --accent-light-green: #CCFBF1;
+    --brand-bright: #2DD4BF;
+    --border-subtle: #E2E8F0;
+    --border-faint: #F1F5F9;
+    --card-white: #FFFFFF;
+
+    /* Skala hijau (skor baik / status positif) */
+    --green-50: #F0FDF4;
+    --green-100: #DCFCE7;
+    --green-500: #22C55E;
+    --green-600: #4ADE80;
+    --green-800: #166534;
+
+    /* Warna sekunder untuk badge / tag / grafik */
+    --blue-50: #EFF6FF;
+    --blue-500: #3B82F6;
+    --blue-600: #2563EB;
+    --cyan-100: #E0F2FE;
+    --cyan-700: #0369A1;
+    --orange-50: #FFF7ED;
+    --orange-100: #FFEDD5;
+    --orange-600: #EA580C;
+    --orange-700: #C2410C;
+    --orange-500: #F97316;
+    --yellow-500: #EAB308;
+    --teal-500: #14B8A6;
+    --purple-50: #F5F3FF;
+    --purple-500: #A855F7;
+    --purple-600: #7C3AED;
+    --purple-700: #5B21B6;
+    --red-500: #EF4444;
+    --rose-600: #E11D48;
+    --rose-100: #FFE4E6;
+    --slate-100: #F1F5F9;
+    --slate-300: #CBD5E1;
+    --slate-400: #94A3B8;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1E293B;
+    --slate-900: #0F172A;
+
+    /* Tipografi & bentuk */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --shadow-card-hover: 0 6px 16px rgba(0, 0, 0, 0.04);
+
+    /* Ikon panah dropdown, dipakai ulang oleh semua select */
+    --chevron-icon: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+}
+
+a {
+    color: inherit;
+}
+
+/* --- Aksesibilitas: fokus keyboard terlihat jelas --- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--accent-dark-green);
+    outline-offset: 2px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* =========================================================
+   Kerangka aplikasi: sidebar + area konten
+   ========================================================= */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    background-color: var(--bg-sidebar);
+    padding: 2rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Aksen daun dekoratif, samar-samar di belakang menu */
+.sidebar::before {
+    content: "";
+    position: absolute;
+    left: -40px;
+    bottom: 120px;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle at 30% 30%, rgba(45, 212, 191, 0.16), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.sidebar > * {
+    position: relative;
+    z-index: 1;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+    padding-left: 0.5rem;
+}
+
+.logo span {
+    color: var(--brand-bright);
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: var(--slate-400);
+    text-decoration: none;
+    padding: 0.75rem 0.9rem;
+    border-radius: var(--radius-lg);
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-item i {
+    width: 18px;
+    text-align: center;
+}
+
+.nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: #FFFFFF;
+}
+
+.nav-item.is-active {
+    background-color: var(--accent-dark-green);
+    color: #FFFFFF;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.35);
+}
+
+.nav-item.is-active:hover {
+    background-color: var(--accent-dark-green);
+}
+
+.menu-divider {
+    display: block;
+    color: var(--slate-600);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-top: 1.5rem;
+    margin-bottom: 0.4rem;
+    padding-left: 0.75rem;
+}
+
+.sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem;
+    border-radius: var(--radius-lg);
+    border: none;
+    background: var(--bg-sidebar-soft);
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-profile:hover {
+    background-color: #12403A;
+}
+
+.profile-avatar {
+    width: 36px;
+    height: 36px;
+    background-color: var(--border-subtle);
+    color: var(--slate-700);
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-name {
+    color: #FFFFFF;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.profile-role {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.profile-dropdown-icon {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* --- Area konten utama --- */
+.main-content {
+    flex: 1;
+    margin-left: 250px;
+    padding: 2.5rem;
+    max-width: 1300px;
+    min-width: 0;
+}
+
+.content-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.content-header h1 span {
+    color: var(--accent-dark-green);
+    font-style: italic;
+    font-weight: 400;
+}
+
+.content-header p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.user-name {
+    color: var(--green-800);
+}
+
+/* =========================================================
+   Komponen bersama
+   ========================================================= */
+
+/* --- Kartu panel generik --- */
+.form-panel {
+    background-color: var(--card-white);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+}
+
+.panel-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.panel-header-inline {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+/* --- Link dengan panah (mis. "Lihat semua", "Lihat detail") --- */
+.link-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    color: var(--accent-dark-green);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.link-action i {
+    font-size: 0.7rem;
+    transition: transform 0.15s ease;
+}
+
+.link-action:hover {
+    color: var(--accent-dark-green-hover);
+}
+
+.link-action:hover i {
+    transform: translateX(2px);
+}
+
+.link-action-sm {
+    font-size: 0.75rem;
+}
+
+/* --- Tombol ikon bulat (mis. notifikasi, tutup panel) --- */
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--card-white);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+}
+
+.icon-btn:hover {
+    background-color: #F8FAFC;
+    border-color: var(--slate-300);
+    color: var(--text-dark);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+.icon-btn-sm {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+}
+
+/* --- Ikon berwarna dalam lingkaran/kotak (mis. kartu KPI, target feedback) --- */
+.icon-chip,
+.icon-chip-square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.icon-chip {
+    border-radius: 50%;
+}
+
+.icon-chip-square {
+    border-radius: var(--radius-md);
+}
+
+.icon-blue   { background-color: var(--blue-50); color: var(--blue-500); }
+.icon-green  { background-color: var(--green-50); color: var(--green-500); }
+.icon-yellow { background-color: #FEFCE8; color: var(--yellow-500); }
+.icon-teal   { background-color: #F0FDFA; color: var(--teal-500); }
+.icon-purple { background-color: var(--purple-50); color: var(--purple-500); }
+.icon-orange { background-color: var(--orange-50); color: var(--orange-600); }
+.icon-forest { background-color: var(--accent-light-green); color: var(--accent-dark-green); }
+.icon-neutral { background-color: #F8FAFC; color: var(--text-muted); border: 1px solid var(--border-subtle); }
+
+/* --- Banner info (anonimitas) --- */
+.info-banner {
+    background-color: var(--card-white);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+}
+
+.banner-text h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.banner-text p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.banner-graphic {
+    position: absolute;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+/* --- Dropdown (select) baku --- */
+.form-select,
+.select-timeline,
+.history-select {
+    background-color: var(--card-white);
+    color: var(--slate-600);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0.45rem 2rem 0.45rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    appearance: none;
+    background-image: var(--chevron-icon);
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 0.85rem;
+    transition: border-color 0.15s ease;
+}
+
+.form-select:hover,
+.select-timeline:hover,
+.history-select:hover {
+    border-color: var(--text-muted);
+}
+
+.form-select:focus-visible,
+.select-timeline:focus-visible,
+.history-select:focus-visible {
+    border-color: var(--accent-dark-green);
+}
+
+/* Dropdown besar untuk isian form (mis. pilih karyawan) */
+.form-select-lg {
+    width: 100%;
+    background-color: var(--card-white);
+    color: var(--text-dark);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    appearance: none;
+    background-image: var(--chevron-icon);
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    transition: border-color 0.15s ease;
+}
+
+.form-select-lg:hover {
+    border-color: var(--text-muted);
+}
+
+.form-select-lg:focus-visible {
+    border-color: var(--accent-dark-green);
+}
+
+/* --- State error (dipakai saat validasi gagal, mis. dropdown wajib diisi) --- */
+.is-invalid {
+    border-color: var(--red-500) !important;
+}
+
+.field-error-msg {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--red-500);
+    font-size: 0.78rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.field-error-msg.is-hidden {
+    display: none;
+}
+
+/* --- Kotak tips --- */
+.tips-box {
+    background-color: #F8FAFC;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+}
+
+.tips-title {
+    color: var(--green-800);
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.tips-box ul {
+    list-style: none;
+}
+
+.tips-box li {
+    font-size: 0.8rem;
+    color: var(--slate-600);
+    position: relative;
+    padding-left: 1rem;
+    line-height: 1.5;
+    margin-bottom: 0.25rem;
+}
+
+.tips-box li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--slate-400);
+}
+
+.tips-box p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* --- Tombol --- */
+.btn-secondary,
+.btn-primary {
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color 0.15s ease;
+}
+
+.btn-secondary {
+    background-color: #FFFFFF;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-dark);
+    padding: 0.75rem 1.5rem;
+}
+
+.btn-secondary:hover {
+    background-color: #F8FAFC;
+}
+
+.btn-primary {
+    background-color: var(--accent-dark-green);
+    color: #FFFFFF;
+    border: none;
+    padding: 0.75rem 1.75rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-dark-green-hover);
+}
+
+.action-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+/* --- Status disabled (dipakai di dashboard untuk fitur belum aktif) --- */
+.is-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.55;
+    user-select: none;
+    box-shadow: none !important;
+}
+
+.is-disabled svg,
+.is-disabled img {
+    filter: grayscale(60%) opacity(80%);
+}
+
+.is-disabled a,
+.is-disabled button {
+    text-decoration: none !important;
+    color: var(--slate-400) !important;
+}
+
+/* =========================================================
+   Animasi bersama
+   ========================================================= */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fadeUp 0.4s ease-out backwards;
+}
+
+@keyframes growBar {
+    from { width: 0%; }
+    to { width: var(--target-width); }
+}
+
+.bar-fill.animate-bar-grow {
+    animation: growBar 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s backwards;
+}
+
+@keyframes drawLine {
+    from { stroke-dashoffset: 600; }
+    to { stroke-dashoffset: 0; }
+}
+
+.animated-line-path {
+    stroke-dasharray: 600;
+    animation: drawLine 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.6s backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-fade-up,
+    .bar-fill.animate-bar-grow,
+    .animated-line-path {
+        animation: none;
+    }
+    .animate-fade-up { opacity: 1; transform: none; }
+    .bar-fill.animate-bar-grow { width: var(--target-width); }
+    .animated-line-path { stroke-dashoffset: 0; }
+}
+
+/* =========================================================
+   Responsif: sidebar & main-content
+   ========================================================= */
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 1.25rem;
+    }
+}
